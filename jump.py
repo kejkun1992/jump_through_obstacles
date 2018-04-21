@@ -19,7 +19,7 @@ class Ball:
         self.obstacle = obstacle
 
     def jump(self, event):  # function change ball's position
-        if canvas_live == True:
+        if canvas_live is True:
             position = self.canvas.coords(self.id)
             if position[3] == self.canvas_height:
                 self.y = -10
@@ -53,7 +53,7 @@ class Obstacle:
     def draw(self):  # draw obstacle at canvas
         self.canvas.move(self.id, self.x, 0)
         position = self.canvas.coords(self.id)
-        colour_list = ['darkgreen','grey','red','blue','magenta','orange','yellow','green','black']
+        colour_list = ['darkgreen', 'grey', 'red', 'blue', 'magenta', 'orange', 'yellow', 'green', 'black']
         colour = random.choice(colour_list)
         speed_list = 2*[-5, -4, -3, -2]+[-6]
         if position[2] <= 0:
@@ -86,7 +86,7 @@ class Background:
             self.x_2 = -2
         self.canvas.move(self.bg_id, self.x, 0)
         self.canvas.move(self.bg_2_id, self.x_2, 0)
-        
+
 '''declaration of menu's function and game's mainloop'''
 
 
@@ -102,12 +102,12 @@ def game(event):
     tk.update()
 
     background = Background(canvas)
-    text1 = canvas.create_text(200, 130,text='', font=('Arial', 30))
+    text1 = canvas.create_text(200, 130, text='', font=('Arial', 30))
     obstacle = Obstacle(canvas, 0)
     ball = Ball(canvas, obstacle)
-     
+
     while 1:  # mainloop of game
-        if ball.hit() == False:
+        if ball.hit() is False:
             background.draw()
             obstacle.draw()
             ball.draw()
@@ -129,18 +129,18 @@ def game(event):
             time.sleep(0.010)
         else:
             time.sleep(0.008)
-            
-        while pause == True:
-            if break_loop == True:
+
+        while pause is True:
+            if break_loop is True:
                 break
             canvas.itemconfig(text1, text='PAUSE')
             tk.update()
             time.sleep(0.01)
-        if break_loop == True:
+        if break_loop is True:
             break
 
     while 1:  # end of game, write score if is high on scores' list
-        if break_loop == True:
+        if break_loop is True:
             break
         global player_name
         canvas_live = False
@@ -161,11 +161,11 @@ def game(event):
         scores_download = open('scores\\scores.txt', 'wt')
         scores_download.write(','.join(scores_read))
         scores_download.close()
-                
+
         canvas_live = True
         canvas.itemconfig(text1, text='GAME OVER')
         tk.mainloop()
-        if break_loop == True:
+        if break_loop is True:
             break
 
 
@@ -174,16 +174,16 @@ def menu():  # open menu
     global button_start, button_exit, button_scores, button_help
     global label_1, label_2, label_3, label_4
     canvas_live = False
-    button_start = Button(tk, text='START', font=('Arial', 24),background='white', relief='solid', width=10)
-    button_exit = Button(tk, text='EXIT', font=('Arial', 24),background='white', relief='solid', width=10)
-    button_scores = Button(tk, text='SCORES', font=('Arial', 24),background='white', relief='solid', width=10)
-    button_help = Button(tk, text='HELP', font=('Arial', 24),background='white', relief='solid', width=10)
+    button_start = Button(tk, text='START', font=('Arial', 24), background='white', relief='solid', width=10)
+    button_exit = Button(tk, text='EXIT', font=('Arial', 24), background='white', relief='solid', width=10)
+    button_scores = Button(tk, text='SCORES', font=('Arial', 24), background='white', relief='solid', width=10)
+    button_help = Button(tk, text='HELP', font=('Arial', 24), background='white', relief='solid', width=10)
     label_1 = Label(tk, text='', font=('Arial', 15))
     label_2 = Label(tk, text='', font=('Arial', 15))
     label_3 = Label(tk, text='', font=('Arial', 15))
     label_4 = Label(tk, text='', font=('Arial', 15))
-    button_start.bind('<Button-1>',game)
-    button_exit.bind('<Button-1>',destroy_tk)
+    button_start.bind('<Button-1>', game)
+    button_exit.bind('<Button-1>', destroy_tk)
     button_scores.bind('<Button-1>', scores_list)
     button_help.bind('<Button-1>', help_key)
     label_1.pack()
@@ -228,18 +228,18 @@ def destroy_tk(event):  # destroy tk = Tk() object
     tk.destroy()
 
 
-def destroy_canvas(event):#destroy canvas or scores or help
+def destroy_canvas(event):  # destroy canvas or scores or help
     global canvas_live
     global scores_live
     global help_live
     global break_loop
     break_loop = True
-    if canvas_live == True:
+    if canvas_live is True:
         canvas.quit()
         canvas.destroy()
         canvas_live = False
         menu()
-    elif scores_live == True:
+    elif scores_live is True:
         label_first.quit()
         label_second.quit()
         label_third.quit()
@@ -249,7 +249,7 @@ def destroy_canvas(event):#destroy canvas or scores or help
         scores_download.close()
         scores_live = False
         menu()
-    elif help_live == True:
+    elif help_live is True:
         label_help.quit()
         label_help.destroy()
         help_live = False
@@ -258,7 +258,7 @@ def destroy_canvas(event):#destroy canvas or scores or help
         pass
 
 
-def destroy_menu():  # it destroys menu buttons 
+def destroy_menu():  # it destroys menu buttons
     button_start.quit()
     button_exit.quit()
     button_scores.quit()
@@ -295,9 +295,9 @@ def entry_get():  # remember player name
 
 def pause_init(event):  # pause game
     global pause
-    if pause == False:
+    if pause is False:
         pause = True
-    elif pause == True:
+    elif pause is True:
         pause = False
 
 '''declaration of global variables and game's window'''
@@ -309,7 +309,7 @@ scores_live = False  # scores exist or not
 help_live = False  # help exist or not
 pause = False  # if True game are paused
 
-tk = Tk()  # declaration of game's window 
+tk = Tk()  # declaration of game's window
 tk.title('Jump through obstacles')
 tk.resizable(0, 0)
 tk.wm_attributes('-topmost', 1)
@@ -319,7 +319,7 @@ tk.bind_all('<space>', pause_init)
 
 label = Label(tk, text='ENTER YOUR NAME:', font=('Arial', 20))  # enter player name at the begining of game
 entry = Entry(tk, relief='solid', font=('Arial', 20))
-button = Button(tk, text='CONFIRM',font=('Arial', 20), command=entry_get)
+button = Button(tk, text='CONFIRM', font=('Arial', 20), command=entry_get)
 label.place(x=10, y=50)
 entry.place(x=10, y=100)
 button.place(x=10, y=150)
