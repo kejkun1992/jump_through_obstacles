@@ -1,11 +1,15 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import time
 import random
 from tkinter import*
 
 '''declaration of class Ball, Obstacle and Background'''
 
+
 class Ball:
-    def __init__(self, canvas, obstacle):#attributes of ball object
+    def __init__(self, canvas, obstacle):  # attributes of ball object
         self.canvas = canvas
         self.id = self.canvas.create_rectangle(0, 0, 50, 50, fill='black', outline='black')
         self.canvas.move(self.id, 0, 350)
@@ -14,13 +18,13 @@ class Ball:
         self.canvas_height = self.canvas.winfo_height()
         self.obstacle = obstacle
 
-    def jump(self, event):#function change ball's position
+    def jump(self, event):  # function change ball's position
         if canvas_live == True:
             position = self.canvas.coords(self.id)
             if position[3] == self.canvas_height:
                 self.y = -10
 
-    def draw(self):#draw ball at canvas
+    def draw(self):  # draw ball at canvas
         self.canvas.move(self.id, 0, self.y)
         position = self.canvas.coords(self.id)
         if position[1] <= 0:
@@ -28,7 +32,7 @@ class Ball:
         if position[3] >= self.canvas_height:
             self.y = 0
 
-    def hit(self):#if ball hit obstacle return True
+    def hit(self):  # if ball hit obstacle return True
         position = self.canvas.coords(self.id)
         obstacle_position = self.canvas.coords(self.obstacle.id)
         if position[2] >= obstacle_position[0]:
@@ -36,8 +40,9 @@ class Ball:
                 return True
         return False
 
+
 class Obstacle:
-    def __init__(self, canvas, score):#attributes of obstacle object
+    def __init__(self, canvas, score):  # attributes of obstacle object
         self.canvas = canvas
         self.id = self.canvas.create_rectangle(0, 0, 25, 100, fill='black', outline='black')
         self.canvas.move(self.id, 400, 300)
@@ -45,7 +50,7 @@ class Obstacle:
         self.canvas_width = self.canvas.winfo_width()
         self.score = score
 
-    def draw(self):#draw obstacle at canvas
+    def draw(self):  # draw obstacle at canvas
         self.canvas.move(self.id, self.x, 0)
         position = self.canvas.coords(self.id)
         colour_list = ['darkgreen','grey','red','blue','magenta','orange','yellow','green','black']
@@ -57,8 +62,9 @@ class Obstacle:
             self.x = random.choice(speed_list)
             self.score = self.score + 1
 
+
 class Background:
-    def __init__(self, canvas):#attributes of background object
+    def __init__(self, canvas):  # attributes of background object
         self.canvas = canvas
         self.bg = PhotoImage(file='graphics\\background_800x400.png')
         self.bg_2 = PhotoImage(file='graphics\\background2_800x400.png')
@@ -67,7 +73,7 @@ class Background:
         self.x = -2
         self.x_2 = -2
 
-    def draw(self):#draw background at canvas
+    def draw(self):  # draw background at canvas
         position = self.canvas.coords(self.bg_id)
         position_2 = self.canvas.coords(self.bg_2_id)
         if position[0] == -800:
@@ -83,8 +89,9 @@ class Background:
         
 '''declaration of menu's function and game's mainloop'''
 
+
 def game(event):
-    global canvas, canvas_live#declaration of game's canvas
+    global canvas, canvas_live  # declaration of game's canvas
     global break_loop, pause
     destroy_menu()
     break_loop = False
@@ -99,14 +106,14 @@ def game(event):
     obstacle = Obstacle(canvas, 0)
     ball = Ball(canvas, obstacle)
      
-    while 1:#mainloop of game
+    while 1:  # mainloop of game
         if ball.hit() == False:
             background.draw()
             obstacle.draw()
             ball.draw()
         else:
             break
-        #higher score - higher speed of game
+        '''higher score - higher speed of game'''
         if obstacle.score == 10 or obstacle.score == 25 or obstacle.score == 50 or obstacle.score == 100:
             canvas.itemconfig(text1, text='ACCELERATION')
         else:
@@ -132,7 +139,7 @@ def game(event):
         if break_loop == True:
             break
 
-    while 1:#end of game, write score if is high on scores' list
+    while 1:  # end of game, write score if is high on scores' list
         if break_loop == True:
             break
         global player_name
@@ -161,7 +168,8 @@ def game(event):
         if break_loop == True:
             break
 
-def menu():#open menu
+
+def menu():  # open menu
     global canvas_live
     global button_start, button_exit, button_scores, button_help
     global label_1, label_2, label_3, label_4
@@ -188,7 +196,8 @@ def menu():#open menu
     button_exit.pack()
     tk.mainloop()
 
-def scores_list(event):#open scores' list
+
+def scores_list(event):  # open scores' list
     global scores_live, scores_download
     global label_first, label_second, label_third
     destroy_menu()
@@ -203,7 +212,8 @@ def scores_list(event):#open scores' list
     scores_live = True
     tk.mainloop()
 
-def help_key(event):#open help about keys
+
+def help_key(event):  # open help about keys
     global label_help
     global help_live
     destroy_menu()
@@ -212,9 +222,11 @@ def help_key(event):#open help about keys
     help_live = True
     tk.mainloop()
 
-def destroy_tk(event):#destroy tk = Tk() object
+
+def destroy_tk(event):  # destroy tk = Tk() object
     tk.quit()
     tk.destroy()
+
 
 def destroy_canvas(event):#destroy canvas or scores or help
     global canvas_live
@@ -245,7 +257,8 @@ def destroy_canvas(event):#destroy canvas or scores or help
     else:
         pass
 
-def destroy_menu():#it destroys menu buttons 
+
+def destroy_menu():  # it destroys menu buttons 
     button_start.quit()
     button_exit.quit()
     button_scores.quit()
@@ -263,7 +276,8 @@ def destroy_menu():#it destroys menu buttons
     label_3.destroy()
     label_4.destroy()
 
-def entry_get():#remember player name
+
+def entry_get():  # remember player name
     global button, label, entry
     global player_name
     if len(entry.get()) > 0 and len(entry.get()) < 11:
@@ -278,7 +292,8 @@ def entry_get():#remember player name
     else:
         pass
 
-def pause_init(event):#pause game
+
+def pause_init(event):  # pause game
     global pause
     if pause == False:
         pause = True
@@ -287,13 +302,14 @@ def pause_init(event):#pause game
 
 '''declaration of global variables and game's window'''
 
-canvas_live = False #canvas exist or not
-break_loop = False #break mainloop or not
-scores_live = False #scores exist or not
-help_live = False #help exist or not
-pause = False #if True game are paused
 
-tk = Tk()#declaration of game's window 
+canvas_live = False  # canvas exist or not
+break_loop = False  # break mainloop or not
+scores_live = False  # scores exist or not
+help_live = False  # help exist or not
+pause = False  # if True game are paused
+
+tk = Tk()  # declaration of game's window 
 tk.title('Jump through obstacles')
 tk.resizable(0, 0)
 tk.wm_attributes('-topmost', 1)
@@ -301,7 +317,7 @@ tk.geometry('400x400')
 tk.bind_all('<Escape>', destroy_canvas)
 tk.bind_all('<space>', pause_init)
 
-label = Label(tk, text='ENTER YOUR NAME:', font=('Arial', 20))#enter player name at the begining of game
+label = Label(tk, text='ENTER YOUR NAME:', font=('Arial', 20))  # enter player name at the begining of game
 entry = Entry(tk, relief='solid', font=('Arial', 20))
 button = Button(tk, text='CONFIRM',font=('Arial', 20), command=entry_get)
 label.place(x=10, y=50)
@@ -309,4 +325,3 @@ entry.place(x=10, y=100)
 button.place(x=10, y=150)
 
 tk.mainloop()
-
