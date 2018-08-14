@@ -18,13 +18,13 @@ class Ball:
         self.canvas_height = self.canvas.winfo_height()
         self.obstacle = obstacle
 
-    def jump(self, event):  # function change ball's position
+    def jump(self, event):  # function changes ball position
         if canvas_live is True:
             position = self.canvas.coords(self.id)
             if position[3] == self.canvas_height:
                 self.y = -10
 
-    def draw(self):  # draw ball at canvas
+    def draw(self):  # draws ball at canvas
         self.canvas.move(self.id, 0, self.y)
         position = self.canvas.coords(self.id)
         if position[1] <= 0:
@@ -32,7 +32,7 @@ class Ball:
         if position[3] >= self.canvas_height:
             self.y = 0
 
-    def hit(self):  # if ball hit obstacle return True
+    def hit(self):  # if ball hits obstacle returns True
         position = self.canvas.coords(self.id)
         obstacle_position = self.canvas.coords(self.obstacle.id)
         if position[2] >= obstacle_position[0]:
@@ -50,7 +50,7 @@ class Obstacle:
         self.canvas_width = self.canvas.winfo_width()
         self.score = score
 
-    def draw(self):  # draw obstacle at canvas
+    def draw(self):  # draws obstacle at canvas
         self.canvas.move(self.id, self.x, 0)
         position = self.canvas.coords(self.id)
         colour_list = ['darkgreen', 'grey', 'red', 'blue', 'magenta', 'orange', 'yellow', 'green', 'black']
@@ -73,7 +73,7 @@ class Background:
         self.x = -2
         self.x_2 = -2
 
-    def draw(self):  # draw background at canvas
+    def draw(self):  # draws background at canvas
         position = self.canvas.coords(self.bg_id)
         position_2 = self.canvas.coords(self.bg_2_id)
         if position[0] == -800:
@@ -87,11 +87,11 @@ class Background:
         self.canvas.move(self.bg_id, self.x, 0)
         self.canvas.move(self.bg_2_id, self.x_2, 0)
 
-'''declaration of menu's function and game's mainloop'''
+'''declaration of menu function and game mainloop'''
 
 
 def game(event):
-    global canvas, canvas_live  # declaration of game's canvas
+    global canvas, canvas_live  # declaration of game canvas
     global break_loop, pause
     destroy_menu()
     break_loop = False
@@ -139,7 +139,7 @@ def game(event):
         if break_loop is True:
             break
 
-    while 1:  # end of game, write score if is high on scores' list
+    while 1:  # end of game, it writes score if is high on scores list
         if break_loop is True:
             break
         global player_name
@@ -169,7 +169,7 @@ def game(event):
             break
 
 
-def menu():  # open menu
+def menu():  # opens menu
     global canvas_live
     global button_start, button_exit, button_scores, button_help
     global label_1, label_2, label_3, label_4
@@ -197,7 +197,7 @@ def menu():  # open menu
     tk.mainloop()
 
 
-def scores_list(event):  # open scores' list
+def scores_list(event):  # opens scores list
     global scores_live, scores_download
     global label_first, label_second, label_third
     destroy_menu()
@@ -213,7 +213,7 @@ def scores_list(event):  # open scores' list
     tk.mainloop()
 
 
-def help_key(event):  # open help about keys
+def help_key(event):  # opens help about keys
     global label_help
     global help_live
     destroy_menu()
@@ -223,12 +223,12 @@ def help_key(event):  # open help about keys
     tk.mainloop()
 
 
-def destroy_tk(event):  # destroy tk = Tk() object
+def destroy_tk(event):  # destroys tk = Tk() object
     tk.quit()
     tk.destroy()
 
 
-def destroy_canvas(event):  # destroy canvas or scores or help
+def destroy_canvas(event):  # destroys canvas or scores or help
     global canvas_live
     global scores_live
     global help_live
@@ -277,7 +277,7 @@ def destroy_menu():  # it destroys menu buttons
     label_4.destroy()
 
 
-def entry_get():  # remember player name
+def entry_get():  # remembers player name
     global button, label, entry
     global player_name
     if len(entry.get()) > 0 and len(entry.get()) < 11:
@@ -303,13 +303,13 @@ def pause_init(event):  # pause game
 '''declaration of global variables and game's window'''
 
 
-canvas_live = False  # canvas exist or not
-break_loop = False  # break mainloop or not
-scores_live = False  # scores exist or not
-help_live = False  # help exist or not
-pause = False  # if True game are paused
+canvas_live = False  # canvas exists or not
+break_loop = False  # breaks mainloop or not
+scores_live = False  # scores exists or not
+help_live = False  # help exists or not
+pause = False  # if True game is paused
 
-tk = Tk()  # declaration of game's window
+tk = Tk()  # declaration of game window
 tk.title('Jump through obstacles')
 tk.resizable(0, 0)
 tk.wm_attributes('-topmost', 1)
@@ -317,7 +317,7 @@ tk.geometry('400x400')
 tk.bind_all('<Escape>', destroy_canvas)
 tk.bind_all('<space>', pause_init)
 
-label = Label(tk, text='ENTER YOUR NAME:', font=('Arial', 20))  # enter player name at the begining of game
+label = Label(tk, text='ENTER YOUR NAME:', font=('Arial', 20))  # enters player name at the begining of game
 entry = Entry(tk, relief='solid', font=('Arial', 20))
 button = Button(tk, text='CONFIRM', font=('Arial', 20), command=entry_get)
 label.place(x=10, y=50)
